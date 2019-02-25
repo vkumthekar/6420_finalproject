@@ -12,11 +12,11 @@
         android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/border"
         android:ellipsize="end"
         android:onClick="getBranches"
         android:singleLine="true"
         android:text="Branch"
-        android:background="@drawable/border"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="wrap" />
@@ -26,24 +26,24 @@
         android:layout_width="210dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/border"
         android:ellipsize="end"
         android:onClick="getInventory"
         android:singleLine="true"
         android:text="Inventory"
-        android:background="@drawable/border"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="wrap" />
 
     <TableLayout
+        android:id="@+id/books_layout"
         android:layout_width="420dp"
         android:layout_height="452dp"
         android:layout_marginLeft="0dp"
         android:layout_marginTop="56dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap"
-        android:id="@+id/books_layout">
+        app:layout_constraintWidth_default="wrap">
 
         <!--TableRow
             android:layout_width="match_parent"
@@ -81,16 +81,43 @@
 
     </TableLayout>
 
+    <TableLayout
+        android:id="@+id/inventory_layout"
+        android:layout_width="420dp"
+        android:layout_height="452dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap"></TableLayout>
+
+
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Add Branch"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:onClick="addBranchView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Add Branch"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintStart_toEndOf="@+id/button4" />
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="addBookView"
+        android:text="Add Book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventory_layout"
+        app:layout_constraintVertical_bias="0.44" />
 
 </android.support.constraint.ConstraintLayout>

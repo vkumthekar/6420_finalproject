@@ -16,31 +16,30 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-public class AddBranch extends AppCompatActivity {
+public class AddBook extends AppCompatActivity {
     RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_branch);
+        setContentView(R.layout.activity_add_book);
         requestQueue = Volley.newRequestQueue(this);
     }
 
-    public void addBranch(View v) {
+    public void addBook(View v) {
 
-        final String branchName = getTextEditView(R.id.b_name).toString();
-        final String address = getTextEditView(R.id.b_address).toString();
-        final String city = getTextEditView(R.id.b_city).toString();
-        final String state = getTextEditView(R.id.b_state).toString();
-        final String zip = getTextEditView(R.id.b_zip).toString();
-        final String phone = getTextEditView(R.id.b_phone).toString();
+        final String bookid = getTextEditView(R.id.book_id).toString();
+        final String description = getTextEditView(R.id.book_description).toString();
+        final String title = getTextEditView(R.id.book_title).toString();
+        final String price = getTextEditView(R.id.book_price).toString();
 
-        String url = MainActivity.BASE_URL + "branches/";
+
+        String url = MainActivity.BASE_URL + "books/";
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("BranchAdd", "Branch added.");
+                Log.d("BookAdd", "Book added.");
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
@@ -59,12 +58,10 @@ public class AddBranch extends AppCompatActivity {
             public byte[] getBody() {
                 try {
                     JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("branchName", branchName);
-                    jsonBody.put("address", address);
-                    jsonBody.put("city", city);
-                    jsonBody.put("state", state);
-                    jsonBody.put("zip", zip);
-                    jsonBody.put("phone", phone);
+                    jsonBody.put("bookid", bookid);
+                    jsonBody.put("description", description);
+                    jsonBody.put("title", title);
+                    jsonBody.put("price", price);
                     final String mRequestBody = jsonBody.toString();
                     return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
                 } catch (Exception uee) {
@@ -74,8 +71,8 @@ public class AddBranch extends AppCompatActivity {
         };
 
         requestQueue.add(MyStringRequest);
-        Intent branchesView = new Intent(AddBranch.this, MainActivity.class);
-        startActivity(branchesView);
+        Intent bookView = new Intent(AddBook.this, MainActivity.class);
+        startActivity(bookView);
     }
 
     private CharSequence getTextEditView(int key) {
@@ -84,12 +81,12 @@ public class AddBranch extends AppCompatActivity {
     }
 
     public void getInventory(View v) {
-        Intent BookView = new Intent(AddBranch.this, MainActivity.class);
+        Intent BookView = new Intent(AddBook.this, MainActivity.class);
         startActivity(BookView);
     }
 
     public void getBranches(View v) {
-        Intent branchView = new Intent(AddBranch.this, MainActivity.class);
+        Intent branchView = new Intent(AddBook.this, MainActivity.class);
         startActivity(branchView);
     }
 }

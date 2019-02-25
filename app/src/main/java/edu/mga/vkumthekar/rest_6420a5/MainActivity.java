@@ -24,12 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+    //String baseUrl = "http://34.73.117.117:8080/";  // This is Vaibhav's REST VM
+    public static String BASE_URL = "http://35.188.245.24:8080/";  // This is Final Project VM
     EditText etGitHubUser; // This will be a reference to our GitHub username input.
     Button btnGetRepos;  // This is a reference to the "Get Repos" button.
     TextView tvRepoList;  // This will reference our repo list text box.
-
-    //String baseUrl = "http://34.73.117.117:8080/";  // This is Vaibhav's REST VM
-    public static String BASE_URL = "http://35.188.245.24:8080/";  // This is Final Project VM
     RequestQueue requestQueue;
 
     @Override
@@ -38,12 +37,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);  // This links our code to our layout which we defined earlier.
         requestQueue = Volley.newRequestQueue(this);
         getBranches(null);
+        //getInventory(null);
     }
 
     public void addBranchView(View v) {
         Intent branchView = new Intent(MainActivity.this, AddBranch.class);
         startActivity(branchView);
     }
+
+    public void addBookView(View v) {
+        Intent bookView = new Intent(MainActivity.this, AddBook.class);
+        startActivity(bookView);
+    }
+
 
     public void getBranches(View v) {
         String url = BASE_URL + "branches/";
@@ -53,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         int counter = 100;
-                        TableLayout ll = (TableLayout) findViewById(R.id.books_layout);
+                        TableLayout ll = findViewById(R.id.books_layout);
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
-                        lp.setMargins(2,5,2,5);
+                        lp.setMargins(2, 5, 2, 5);
                         lp.width = 400;
                         Log.d("RESPONSE", response.toString());
 
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                     //Double price = Double.valueOf(book.get("price").toString());
 
                                     TableRow row = new TableRow(ll.getContext());
-                                    row.setId(++counter+i);
+                                    row.setId(++counter + i);
                                     row.setLayoutParams(lp);
                                     row.setClickable(true);
                                     row.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                             System.out.println("Row clicked: " + v.getId());
 
                                             //get the data you need
-                                            TableRow tablerow = (TableRow)v;
+                                            TableRow tablerow = (TableRow) v;
                                             TextView branch = (TextView) tablerow.getChildAt(0);
                                             String branchId = branch.getText().toString();
                                             Log.d("Show book with id", branchId);
@@ -92,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                             startActivity(branchesView);
                                         }
                                     });
-                                    if(i % 2 == 0)
+                                    if (i % 2 == 0)
                                         row.setBackgroundColor(Color.rgb(240, 240, 240));
                                     else
                                         row.setBackgroundResource(R.drawable.border);
@@ -171,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // If there a HTTP error then add a note to our repo list.
-                        setRepoListText("Error while calling REST API");
+                        setRepoListText();
                         Log.e("Volley", error.toString());
                     }
                 }
@@ -183,34 +189,125 @@ public class MainActivity extends AppCompatActivity {
     public void getInventory(View v) {
         // First, we insert the username into the repo url.
         // The repo url is defined in GitHubs API docs (https://developer.github.com/v3/repos/).
-        String url = BASE_URL+ "books";
-
+        String url = BASE_URL + "inventory/";
+        setContentView(R.layout.activity_main);
         // Next, we create a new JsonArrayRequest. This will use Volley to make a HTTP request
         // that expects a JSON Array Response.
         // To fully understand this, I'd recommend readng the office docs: https://developer.android.com/training/volley/index.html
-        JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
+        final JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        int counter = 100;
+                        TableLayout ll = findViewById(R.id.inventory_layout);
+                        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+                        lp.setMargins(2, 5, 2, 5);
+                        lp.width = 400;
+                        Log.d("Inventory RESPONSE", response.toString());
+
                         // Check the length of our response (to see if the user has any repos)
                         if (response.length() > 0) {
-                            // The user does have repos, so let's loop through them all.
+                            // The user does have books, so let's loop through them all.
                             for (int i = 0; i < response.length(); i++) {
                                 try {
                                     // For each repo, add a new line to our repo list.
-                                    JSONObject jsonObj = response.getJSONObject(i);
-                                    String repoName = jsonObj.get("name").toString();
-                                    String lastUpdated = jsonObj.get("updated_at").toString();
-                                    addToRepoList(repoName, lastUpdated);
+                                    JSONObject inventory = response.getJSONObject(i);
+                                    Log.d("RESPONSE - inventory", inventory.toString());
+                                    //String title = book.get("title").toString();
+                                    //String description = book.get("description").toString();
+                                    //String author = book.get("author").toString();
+                                    //String thumbnailUrl = book.get("thumbnailUrl").toString();
+                                    //Double price = Double.valueOf(book.get("price").toString());
+
+                                    TableRow row = new TableRow(ll.getContext());
+                                    row.setId(++counter + i);
+                                    row.setLayoutParams(lp);
+                                    row.setClickable(true);
+                                    row.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View v) {
+                                            v.setBackgroundColor(Color.GRAY);
+                                            System.out.println("Row clicked: " + v.getId());
+
+                                            //get the data you need
+                                            TableRow tablerow = (TableRow) v;
+                                            TextView inventory = (TextView) tablerow.getChildAt(0);
+                                            String inventoryId = inventory.getText().toString();
+                                            Log.d("Show inventory with id", inventoryId);
+                                            Intent inventoryView = new Intent(MainActivity.this, InventoryActivity.class);
+                                            inventoryView.putExtra("inventoryId", inventoryId);
+                                            startActivity(inventoryView);
+                                        }
+                                    });
+                                    if (i % 2 == 0)
+                                        row.setBackgroundColor(Color.rgb(240, 240, 240));
+                                    else
+                                        row.setBackgroundResource(R.drawable.border);
+
+                                    TextView id = new TextView(row.getContext());
+                                    id.setId(++counter + i);
+                                    id.setLayoutParams(lp);
+                                    id.setText(inventory.get("id").toString());
+                                    row.addView(id);
+
+                                    TextView branch = new TextView(row.getContext());
+                                    branch.setId(++counter + i);
+                                    branch.setLayoutParams(lp);
+                                    branch.setText(inventory.get("branchId").toString());
+                                    row.addView(branch);
+
+                                    TextView book = new TextView(row.getContext());
+                                    book.setId(++counter + i);
+                                    book.setLayoutParams(lp);
+                                    book.setText(inventory.get("bookId").toString());
+                                    row.addView(book);
+
+                                    TextView quantity = new TextView(row.getContext());
+                                    quantity.setId(++counter + i);
+                                    quantity.setLayoutParams(lp);
+                                    quantity.setText(inventory.get("quantity").toString());
+                                    row.addView(quantity);
+
+                                    ll.addView(row, i, lp);
+
                                 } catch (JSONException e) {
                                     // If there is an error then output this to the logs.
                                     Log.e("Volley", "Invalid JSON Object.");
                                 }
 
                             }
+
+                            TableRow header = new TableRow(ll.getContext());
+                            header.setId(counter - 1);
+                            header.setBackgroundColor(Color.rgb(188, 244, 188));
+                            header.setLayoutParams(lp);
+
+                            TextView l_id = new TextView(header.getContext());
+                            l_id.setId(counter - 2);
+                            l_id.setLayoutParams(lp);
+                            l_id.setText("InventoryId");
+                            header.addView(l_id);
+
+                            TextView l_branch = new TextView(header.getContext());
+                            l_branch.setId(counter - 2);
+                            l_branch.setLayoutParams(lp);
+                            l_branch.setText("BranchId");
+                            header.addView(l_branch);
+
+                            TextView l_book = new TextView(header.getContext());
+                            l_book.setId(counter - 3);
+                            l_book.setLayoutParams(lp);
+                            l_book.setText("BookId");
+                            header.addView(l_book);
+
+                            TextView l_quantity = new TextView(header.getContext());
+                            l_quantity.setId(counter - 4);
+                            l_quantity.setLayoutParams(lp);
+                            l_quantity.setText("Quantity");
+                            header.addView(l_quantity);
+
+                            ll.addView(header, 0, lp);
                         } else {
-                            // The user didn't have any repos.
-                            setRepoListText("No repos found.");
+                            Log.e("NoBranch", "No branch found");
                         }
 
                     }
@@ -220,12 +317,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // If there a HTTP error then add a note to our repo list.
-                        setRepoListText("Error while calling REST API");
+                        setRepoListText();
                         Log.e("Volley", error.toString());
                     }
                 }
         );
-
+        requestQueue.add(arrReq);
     }
 
     private void clearRepoList() {
@@ -242,11 +339,10 @@ public class MainActivity extends AppCompatActivity {
         this.tvRepoList.setText(currentText + "\n\n" + strRow);
     }
 
-    private void setRepoListText(String str) {
+    private void setRepoListText() {
         // This is used for setting the text of our repo list box to a specific string.
         // We will use this to write a "No repos found" message if the user doens't have any.
-        this.tvRepoList.setText(str);
+        this.tvRepoList.setText("Error while calling REST API");
     }
-
 
 }

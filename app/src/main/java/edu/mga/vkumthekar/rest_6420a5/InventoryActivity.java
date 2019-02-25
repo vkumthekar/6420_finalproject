@@ -18,37 +18,36 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DisplayBranchActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity
+
+{
     RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
-        setContentView(R.layout.activity_display_branch);
+        setContentView(R.layout.activity_inventory);
         Intent intent = getIntent();
-        String branchId = intent.getStringExtra("branchId");
-        TextView textView = findViewById(R.id.b_id);
-        textView.setText(branchId);
-        setBranchForm(branchId);
+        String inventoryId = intent.getStringExtra("inventoryId");
+        TextView textView = findViewById(R.id.i_id);
+        textView.setText(inventoryId);
+        setInventoryForm(inventoryId);
 
     }
 
-    public void updateBranch(View v) {
+    public void updateInventory(View v) {
+        final String inventoryId = getTextEditView(R.id.i_id).toString();
         final String branchId = getTextEditView(R.id.b_id).toString();
-        final String branchName = getTextEditView(R.id.b_name).toString();
-        final String address = getTextEditView(R.id.b_address).toString();
-        final String city = getTextEditView(R.id.b_city).toString();
-        final String state = getTextEditView(R.id.b_state).toString();
-        final String zip = getTextEditView(R.id.b_zip).toString();
-        final String phone = getTextEditView(R.id.b_phone).toString();
+        final String bookId = getTextEditView(R.id.book_id).toString();
+        final String quantity = getTextEditView(R.id.b_quantity).toString();
 
-        String url = MainActivity.BASE_URL + "branches/" + branchId;
+        String url = MainActivity.BASE_URL + "inventory/" + inventoryId;
 
         StringRequest MyStringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("BranchUpdate", "Branch updated.");
+                Log.d("InventoryUpdate", "Inventory updated.");
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
@@ -67,13 +66,10 @@ public class DisplayBranchActivity extends AppCompatActivity {
             public byte[] getBody() {
                 try {
                     JSONObject jsonBody = new JSONObject();
+                    jsonBody.put("inventoryId", inventoryId);
                     jsonBody.put("branchId", branchId);
-                    jsonBody.put("branchName", branchName);
-                    jsonBody.put("address", address);
-                    jsonBody.put("city", city);
-                    jsonBody.put("state", state);
-                    jsonBody.put("zip", zip);
-                    jsonBody.put("phone", phone);
+                    jsonBody.put("bookId", bookId);
+                    jsonBody.put("quantity", quantity);
                     final String mRequestBody = jsonBody.toString();
                     return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
                 } catch (Exception uee) {
@@ -83,18 +79,18 @@ public class DisplayBranchActivity extends AppCompatActivity {
         };
 
         requestQueue.add(MyStringRequest);
-        Intent branchesView = new Intent(DisplayBranchActivity.this, MainActivity.class);
-        startActivity(branchesView);
+        Intent inventoryView = new Intent(InventoryActivity.this, MainActivity.class);
+        startActivity(inventoryView);
     }
 
-    public void deleteBranch(View v) {
-        final String branchId = getTextEditView(R.id.b_id).toString();
-        String url = MainActivity.BASE_URL + "branches/" + branchId;
-        Log.d("BranchDelete", "Branch being deleted" + branchId);
+    public void deleteInventory(View v) {
+        final String inventoryId = getTextEditView(R.id.i_id).toString();
+        String url = MainActivity.BASE_URL + "inventory/" + inventoryId;
+        Log.d("InventoryDelete", "Inventory being deleted" + inventoryId);
         StringRequest MyStringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("BranchDelete", "Branch deleted.");
+                Log.d("InventoryDelete", "Inventory deleted.");
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
             @Override
@@ -103,13 +99,14 @@ public class DisplayBranchActivity extends AppCompatActivity {
             }
         });
         requestQueue.add(MyStringRequest);
-        Intent branchesView = new Intent(DisplayBranchActivity.this, MainActivity.class);
-        startActivity(branchesView);
+        Intent inventoryView = new Intent(InventoryActivity.this, MainActivity.class);
+        startActivity(inventoryView);
     }
 
-    private void setBranchForm(String branchId) {
-        String url = MainActivity.BASE_URL + "branches/" + branchId;
-        Log.d("Get Branch Response: ", url);
+
+    private void setInventoryForm(String inventoryId) {
+        String url = MainActivity.BASE_URL + "inventory/" + inventoryId;
+        Log.d("Get Inventory Response:", url);
 
         // Initialize a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -117,25 +114,20 @@ public class DisplayBranchActivity extends AppCompatActivity {
                 url,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject branch) {
-                        Log.d("Get Branch Response: ", branch.toString());
+                    public void onResponse(JSONObject inventory) {
+                        Log.d("Get Inventory Response:", inventory.toString());
                         // Process the JSON
                         try {
 
                             // Get the current student (json object) data
-                            String branchName = branch.getString("branchName");
-                            String address = branch.getString("address");
-                            String city = branch.getString("city");
-                            String state = branch.getString("state");
-                            String zip = branch.getString("zip");
-                            String phone = branch.getString("phone");
+                            String branchId = inventory.getString("branchId");
+                            String bookId = inventory.getString("bookId");
+                            String quantity = inventory.getString("quantity");
 
-                            setTextEditView(R.id.b_name, branchName);
-                            setTextEditView(R.id.b_address, address);
-                            setTextEditView(R.id.b_city, city);
-                            setTextEditView(R.id.b_state, state);
-                            setTextEditView(R.id.b_zip, zip);
-                            setTextEditView(R.id.b_phone, phone);
+                            setTextEditView(R.id.b_id, branchId);
+                            setTextEditView(R.id.book_id, bookId);
+                            setTextEditView(R.id.b_quantity, quantity);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -166,8 +158,13 @@ public class DisplayBranchActivity extends AppCompatActivity {
         return textView.getText();
     }
 
+    public void getInventory(View v) {
+        Intent BookView = new Intent(InventoryActivity.this, MainActivity.class);
+        startActivity(BookView);
+    }
+
     public void getBranches(View v) {
-        Intent branchesView = new Intent(DisplayBranchActivity.this, MainActivity.class);
-        startActivity(branchesView);
+        Intent branchView = new Intent(InventoryActivity.this, MainActivity.class);
+        startActivity(branchView);
     }
 }
