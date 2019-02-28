@@ -33,7 +33,7 @@ public class AddBook extends AppCompatActivity {
         final String description = getTextEditView(R.id.book_description).toString();
         final String title = getTextEditView(R.id.book_title).toString();
         final String price = getTextEditView(R.id.book_price).toString();
-        final String branch_id = getTextEditView(R.id.branch_id).toString();
+        final String branch_id = getTextEditView(R.id.b_id).toString();
         final String author = getTextEditView(R.id.author).toString();
         final String publisher = getTextEditView(R.id.publisher).toString();
         final String thumbnailUrl = getTextEditView(R.id.thumbURL).toString();
@@ -49,7 +49,7 @@ public class AddBook extends AppCompatActivity {
                 try {
                     Log.d("BoodResponse", response);
                     JSONObject book = new JSONObject(response);
-                    book_id = book.getString("bookId");
+                    book_id = book.getString("id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
