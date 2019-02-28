@@ -25,7 +25,10 @@
             android:required="false" />
 
         <activity android:name=".DisplayBranchActivity" />
-        <activity android:name=".AddBranch"></activity>
+        <activity android:name=".AddBook" />
+        <activity android:name=".InventoryActivity" />
+        <activity android:name=".AddBranch" />
+        <activity android:name=".ListInventory"></activity>
     </application>
 
 </manifest>

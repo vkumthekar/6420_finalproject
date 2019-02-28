@@ -4,46 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".ListInventory">
 
     <Button
         android:id="@+id/button10"
         android:layout_width="210dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="378dp"
         android:background="@drawable/border"
         android:ellipsize="end"
         android:onClick="getBranches"
         android:singleLine="true"
         android:text="Branch"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap" />
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button11"
         android:layout_width="210dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="378dp"
         android:background="@drawable/border"
         android:ellipsize="end"
         android:onClick="getInventory"
         android:singleLine="true"
         android:text="Inventory"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap" />
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:id="@+id/books_layout"
         android:layout_width="420dp"
-        android:layout_height="452dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/inventory_layout"
+        app:layout_constraintEnd_toEndOf="@+id/button10"
+        app:layout_constraintStart_toEndOf="@+id/button10"
+        app:layout_constraintTop_toTopOf="@+id/inventory_layout">
 
         <!--TableRow
             android:layout_width="match_parent"
@@ -83,28 +83,25 @@
 
     <TableLayout
         android:id="@+id/inventory_layout"
-        android:layout_width="420dp"
-        android:layout_height="452dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="wrap"></TableLayout>
+        android:layout_width="374dp"
+        android:layout_height="363dp"
+        android:layout_marginBottom="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button10"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"></TableLayout>
 
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="addBranchView"
-        android:text="Add Branch"
+        android:layout_marginBottom="27dp"
+        android:onClick="addBookView"
+        android:text="Add Book"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button10"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintTop_toBottomOf="@+id/button11" />
 
 </android.support.constraint.ConstraintLayout>

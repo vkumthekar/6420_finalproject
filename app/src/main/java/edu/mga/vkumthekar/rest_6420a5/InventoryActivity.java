@@ -53,6 +53,7 @@ public class InventoryActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error) {
                 //This code is executed if there is an error.
+                error.printStackTrace();
             }
         })
 
@@ -66,20 +67,22 @@ public class InventoryActivity extends AppCompatActivity
             public byte[] getBody() {
                 try {
                     JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("inventoryId", inventoryId);
+                    jsonBody.put("id", inventoryId);
                     jsonBody.put("branchId", branchId);
                     jsonBody.put("bookId", bookId);
                     jsonBody.put("quantity", quantity);
                     final String mRequestBody = jsonBody.toString();
+                    Log.d("UpdateInvRequestLog", mRequestBody);
                     return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
                 } catch (Exception uee) {
+                    Log.d("Error", uee.getMessage());
                     return null;
                 }
             }
         };
 
         requestQueue.add(MyStringRequest);
-        Intent inventoryView = new Intent(InventoryActivity.this, MainActivity.class);
+        Intent inventoryView = new Intent(InventoryActivity.this, ListInventory.class);
         startActivity(inventoryView);
     }
 
