@@ -84,8 +84,8 @@ public class AddBranch extends AppCompatActivity {
     }
 
     public void getInventory(View v) {
-        Intent BookView = new Intent(AddBranch.this, MainActivity.class);
-        startActivity(BookView);
+        Intent inventoryView = new Intent(AddBranch.this, ListInventory.class);
+        startActivity(inventoryView);
     }
 
     public void getBranches(View v) {

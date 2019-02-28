@@ -170,4 +170,9 @@ public class DisplayBranchActivity extends AppCompatActivity {
         Intent branchesView = new Intent(DisplayBranchActivity.this, MainActivity.class);
         startActivity(branchesView);
     }
+
+    public void getInventory(View view) {
+        Intent inventoryView = new Intent(DisplayBranchActivity.this, ListInventory.class);
+        startActivity(inventoryView);
+    }
 }

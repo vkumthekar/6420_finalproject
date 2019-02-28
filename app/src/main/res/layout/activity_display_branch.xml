@@ -14,6 +14,7 @@
         android:background="@drawable/border"
         android:ellipsize="end"
         android:onClick="getBranches"
+        android:textAllCaps="false"
         android:singleLine="true"
         android:text="Branch"
         app:layout_constraintBaseline_toBaselineOf="@+id/button11"
@@ -27,6 +28,8 @@
         android:background="@drawable/border"
         android:ellipsize="end"
         android:singleLine="true"
+        android:onClick="getInventory"
+        android:textAllCaps="false"
         android:text="Inventory"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -214,6 +217,7 @@
         android:layout_marginLeft="130dp"
         android:layout_marginBottom="16dp"
         android:onClick="updateBranch"
+        android:textAllCaps="false"
         android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -226,6 +230,7 @@
         android:layout_marginLeft="19dp"
         android:layout_marginBottom="16dp"
         android:onClick="deleteBranch"
+        android:textAllCaps="false"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button" />

@@ -102,7 +102,7 @@ public class InventoryActivity extends AppCompatActivity
             }
         });
         requestQueue.add(MyStringRequest);
-        Intent inventoryView = new Intent(InventoryActivity.this, MainActivity.class);
+        Intent inventoryView = new Intent(InventoryActivity.this, ListInventory.class);
         startActivity(inventoryView);
     }
 
@@ -162,8 +162,8 @@ public class InventoryActivity extends AppCompatActivity
     }
 
     public void getInventory(View v) {
-        Intent BookView = new Intent(InventoryActivity.this, MainActivity.class);
-        startActivity(BookView);
+        Intent inventoryView = new Intent(InventoryActivity.this, ListInventory.class);
+        startActivity(inventoryView);
     }
 
     public void getBranches(View v) {

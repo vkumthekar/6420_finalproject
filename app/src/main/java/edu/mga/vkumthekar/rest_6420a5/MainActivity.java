@@ -46,10 +46,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getInventory(View v) {
-        Intent branchView = new Intent(MainActivity.this, ListInventory.class);
-        startActivity(branchView);
+        Intent inventoryView = new Intent(MainActivity.this, ListInventory.class);
+        startActivity(inventoryView);
     }
 
+    public void addBookView(View v) {
+        Intent bookView = new Intent(MainActivity.this, AddBook.class);
+        startActivity(bookView);
+    }
 
     public void getBranches(View v) {
         String url = BASE_URL + "branches/";
